@@ -150,7 +150,7 @@ export default function Editor(props: EditorProps) {
   }
 
   return (
-    <div className="relative h-full z-10 -ml-10 col-span-3 bg-slate-800 rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10">
+    <div className="relative lg:h-full z-10 lg:-ml-10 col-span-3 bg-slate-800 rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10">
       <div className="relative flex justify-between items-center text-slate-400 text-xs leading-6">
         <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
           tsconfig.json
