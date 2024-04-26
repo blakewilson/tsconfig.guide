@@ -150,9 +150,9 @@ export default function Editor(props: EditorProps) {
   }
 
   return (
-    <div className="relative lg:h-full z-10 lg:-ml-10 col-span-3 bg-slate-800 rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10">
-      <div className="relative flex justify-between items-center text-slate-400 text-xs leading-6">
-        <div className="mt-2 flex-none text-sky-300 border-t border-b border-t-transparent border-b-sky-300 px-4 py-1 flex items-center">
+    <div className="relative overflow-hidden lg:h-full z-10 lg:-ml-10 col-span-3 bg-[#011627] rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10">
+      <div className="relative flex justify-between items-center bg-[#0a2030] border-b border-b-[#1d3344] text-slate-400 text-md leading-6">
+        <div className="my-2 flex-none text-slate-300 px-4 py-2 flex items-center">
           tsconfig.json
         </div>
         <div className="h-8 flex items-center pr-16">
@@ -184,10 +184,7 @@ export default function Editor(props: EditorProps) {
           language="tsx"
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre
-              className="h-full bg-none"
-              style={{ ...style, backgroundColor: "transparent" }}
-            >
+            <pre className="h-full" style={style}>
               <code className="block min-w-full p-5">
                 {tokens.map((line, i) => (
                   <div key={i} {...getLineProps({ line })}>
