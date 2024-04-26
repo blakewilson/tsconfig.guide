@@ -28,7 +28,7 @@ export default function Options() {
           defaults!
         </p>
         <p className="text-2xl text-slate-500">
-          This TSConfig builder is heavily influenced on{" "}
+          This TSConfig builder is heavily influenced by{" "}
           <a
             className="text-white underline"
             target="_blank"

@@ -1,4 +1,5 @@
 import Editor from "@/components/editor";
+import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Options from "@/components/optionsPane";
 import { OptionsProvider } from "@/store/options-context";
@@ -11,6 +12,7 @@ export default function Home() {
         <div className="w-full lg:w-1/2 p-12 flex items-center justify-center">
           <div className="w-full lg:max-w-4xl">
             <Options />
+            <Footer />
           </div>
         </div>
         <div className="w-full lg:w-1/2 p-12 lg:p-0 max-h-auto lg:max-h-5/6 lg:justify-center relative overflow-hidden lg:-right-12">
