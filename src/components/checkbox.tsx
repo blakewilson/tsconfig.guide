@@ -33,8 +33,8 @@ export default function CheckboxInput({
         checked={checked}
         onChange={setChecked}
         className={classNames(
-          checked ? "bg-indigo-600" : "bg-gray-200",
-          "relative inline-flex h-9 w-16 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+          checked ? "bg-green-400" : "bg-gray-200",
+          "relative inline-flex h-9 w-16 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
         )}
       >
         <span

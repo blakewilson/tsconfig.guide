@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+pre[class*="language-"],
+code[class*="language-"] {
+  white-space: normal;
+  overflow: auto;
+  word-break: break-word;
+}

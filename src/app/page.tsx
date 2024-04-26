@@ -8,10 +8,12 @@ export default function Home() {
     <OptionsProvider>
       <Header />
       <main className="flex h-screen overflow-hidden items-center justify-between ">
-        <div className="w-1/2 p-12">
-          <Options />
+        <div className="w-1/2 p-12 flex items-center justify-center">
+          <div className="max-w-4xl">
+            <Options />
+          </div>
         </div>
-        <div className="w-1/2 relative -right-12">
+        <div className="w-1/2 max-h-5/6 justify-center relative overflow-hidden -right-12">
           <Editor />
         </div>
       </main>

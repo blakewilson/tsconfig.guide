@@ -21,7 +21,7 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="text-2xl font-semibold">TSConfig Builder</span>
+            <span className="text-2xl font-semibold">TSConfig Guide</span>
           </a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
