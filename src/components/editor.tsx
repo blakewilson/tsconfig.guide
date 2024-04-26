@@ -1,6 +1,6 @@
 "use client";
 import { useOptions } from "@/store/options-context";
-import { parse, stringify } from "comment-json";
+import { CommentArray, CommentSymbol, parse, stringify } from "comment-json";
 import { Highlight, themes } from "prism-react-renderer";
 import { TSConfigJSON } from "types-tsconfig";
 
@@ -86,6 +86,10 @@ export default function Editor(props: EditorProps) {
 
   let parsed = parse(JSON.stringify(config));
 
+  if (!parsed) {
+    return null;
+  }
+
   if (!removeComments) {
     parsed[Symbol.for("before:include")] = [
       {
@@ -149,6 +153,8 @@ export default function Editor(props: EditorProps) {
     }
   }
 
+  const prettyTSConfig = stringify(parsed, null, 2);
+
   return (
     <div className="relative overflow-hidden lg:h-full z-10 lg:-ml-10 col-span-3 bg-[#011627] rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10">
       <div className="relative flex justify-between items-center bg-[#0a2030] border-b border-b-[#1d3344] text-slate-400 text-md leading-6">
@@ -159,6 +165,7 @@ export default function Editor(props: EditorProps) {
           <div className="relative flex -mr-2">
             <button
               type="button"
+              onClick={() => navigator.clipboard.writeText(prettyTSConfig)}
               className="text-slate-500 hover:text-slate-400"
             >
               <svg
@@ -178,11 +185,7 @@ export default function Editor(props: EditorProps) {
         </div>
       </div>
       <div className="relative h-full overflow-y-auto">
-        <Highlight
-          theme={themes.nightOwl}
-          code={stringify(parsed, null, 2)}
-          language="tsx"
-        >
+        <Highlight theme={themes.nightOwl} code={prettyTSConfig} language="tsx">
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <pre className="h-full" style={style}>
               <code className="block min-w-full p-5">
