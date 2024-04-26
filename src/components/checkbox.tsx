@@ -17,7 +17,7 @@ export default function CheckboxInput({
 }: CheckboxInputProps) {
   return (
     <Switch.Group as="div" className="flex items-center justify-between mb-8">
-      <span className="flex flex-grow flex-col">
+      <span className="flex flex-grow flex-col mr-4">
         <Switch.Label
           as="div"
           className="text-2xl font-medium leading-6 mb-2 text-white"

@@ -11,6 +11,7 @@ export default function Options() {
       buildingLib,
       buildingLibMonorepo,
       runsInDom,
+      removeComments,
     },
     dispatch,
   } = useOptions();
@@ -19,8 +20,8 @@ export default function Options() {
     <>
       <div className="mb-12">
         <h2 className="text-4xl font-semibold mb-4 leading-normal text-white">
-          Sick of scouring the TypeScript docs for what you need in your
-          tsconfig.json?
+          Sick of Scouring the TypeScript Docs for What You Need in Your
+          TSConfig?
         </h2>
         <p className="mb-4 text-2xl text-slate-500">
           I was too, so I built this tool to get you started with some smart
@@ -30,12 +31,13 @@ export default function Options() {
           This TSConfig builder is heavily influenced on{" "}
           <a
             className="text-white underline"
+            target="_blank"
             href="https://www.totaltypescript.com/tsconfig-cheat-sheet"
           >
             Matt Pocock&apos;s TSConfig Cheat Sheet
           </a>
           {". "}I highly encourage you to check it out for further explanation
-          for each of these properties.
+          of these properties.
         </p>
       </div>
       <form>
@@ -98,6 +100,18 @@ export default function Options() {
           setChecked={(value: boolean) =>
             dispatch({
               type: "setRunsInDom",
+              payload: value,
+            })
+          }
+        />
+
+        <CheckboxInput
+          name="Remove Comments?"
+          description="Toggle if you want to just copy the JSON."
+          checked={removeComments}
+          setChecked={(value: boolean) =>
+            dispatch({
+              type: "setRemoveComments",
               payload: value,
             })
           }

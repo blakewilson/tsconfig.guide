@@ -6,7 +6,8 @@ type Actions =
   | { type: "setTSTranspiling"; payload: boolean }
   | { type: "setBuildingLib"; payload: boolean }
   | { type: "setBuildingLibMonorepo"; payload: boolean }
-  | { type: "setRunsInDom"; payload: boolean };
+  | { type: "setRunsInDom"; payload: boolean }
+  | { type: "setRemoveComments"; payload: boolean };
 type Dispatch = (action: Actions) => void;
 type State = {
   strictness: boolean;
@@ -14,6 +15,7 @@ type State = {
   buildingLib: boolean;
   buildingLibMonorepo: boolean;
   runsInDom: boolean;
+  removeComments: boolean;
 };
 type CountProviderProps = { children: React.ReactNode };
 
@@ -38,6 +40,9 @@ function countReducer(state: State, action: Actions) {
     case "setRunsInDom": {
       return { ...state, runsInDom: action.payload } as State;
     }
+    case "setRemoveComments": {
+      return { ...state, removeComments: action.payload } as State;
+    }
     default: {
       throw new Error(`Unhandled action type: ${(action as any).type}`);
     }
@@ -51,6 +56,7 @@ function OptionsProvider({ children }: CountProviderProps) {
     buildingLib: false,
     buildingLibMonorepo: false,
     runsInDom: true,
+    removeComments: false,
   } as State);
   // NOTE: you *might* need to memoize this value
   // Learn more in http://kcd.im/optimize-context

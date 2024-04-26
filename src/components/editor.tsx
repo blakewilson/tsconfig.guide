@@ -14,6 +14,7 @@ export default function Editor(props: EditorProps) {
       buildingLib,
       buildingLibMonorepo,
       runsInDom,
+      removeComments,
     },
   } = useOptions();
 
@@ -74,77 +75,78 @@ export default function Editor(props: EditorProps) {
   if (runsInDom) {
     config.compilerOptions = {
       ...config.compilerOptions,
-      lib: ["es2022", "dom", "dom.iterable"],
+      lib: ["esnext", "dom", "dom.iterable"],
     };
   } else {
     config.compilerOptions = {
       ...config.compilerOptions,
-      lib: ["es2022"],
+      lib: ["esnext"],
     };
   }
 
   let parsed = parse(JSON.stringify(config));
 
-  parsed[Symbol.for("before:include")] = [
-    {
-      type: "LineComment",
-      inline: false,
-      value: " Include the necessary files for your project",
-    },
-  ];
+  if (!removeComments) {
+    parsed[Symbol.for("before:include")] = [
+      {
+        type: "LineComment",
+        inline: false,
+        value: " Include the necessary files for your project",
+      },
+    ];
 
-  parsed.compilerOptions[Symbol.for("before:esModuleInterop")] = [
-    {
-      type: "LineComment",
-      inline: false,
-      value: " Base Options",
-    },
-  ];
+    parsed.compilerOptions[Symbol.for("before:esModuleInterop")] = [
+      {
+        type: "LineComment",
+        inline: false,
+        value: " Base Options recommended for all projects",
+      },
+    ];
 
-  parsed.compilerOptions[Symbol.for("before:strict")] = [
-    {
-      type: "LineComment",
-      inline: false,
-      value: " Enable strict type checking so you can catch bugs early",
-    },
-  ];
+    parsed.compilerOptions[Symbol.for("before:strict")] = [
+      {
+        type: "LineComment",
+        inline: false,
+        value: " Enable strict type checking so you can catch bugs early",
+      },
+    ];
 
-  parsed.compilerOptions[Symbol.for("before:module")] = [
-    {
-      type: "LineComment",
-      inline: false,
-      value: tsTranspiling
-        ? "We are transpiling with TypeScript"
-        : "We are not transpiling with TypeScript, so preserve our source code",
-    },
-  ];
+    parsed.compilerOptions[Symbol.for("before:module")] = [
+      {
+        type: "LineComment",
+        inline: false,
+        value: tsTranspiling
+          ? "Transpile our TypeScript code to JavaScript"
+          : "We are not transpiling, so preserve our source code and do not emit files",
+      },
+    ];
 
-  parsed.compilerOptions[Symbol.for("before:declaration")] = [
-    {
-      type: "LineComment",
-      inline: false,
-      value: " Type declarations for users of your library",
-    },
-  ];
+    parsed.compilerOptions[Symbol.for("before:declaration")] = [
+      {
+        type: "LineComment",
+        inline: false,
+        value: "Emit type declarations",
+      },
+    ];
 
-  parsed.compilerOptions[Symbol.for("before:composite")] = [
-    {
-      type: "LineComment",
-      inline: false,
-      value:
-        " We're building a library in a monorepo. These options help with caching builds and source maps for your users",
-    },
-  ];
-
-  if (runsInDom) {
-    parsed.compilerOptions[Symbol.for("before:lib")] = [
+    parsed.compilerOptions[Symbol.for("before:composite")] = [
       {
         type: "LineComment",
         inline: false,
         value:
-          "Our project will be ran in the browser, so include the proper dom libs",
+          " Emit source maps and enable the composite option for monorepos",
       },
     ];
+
+    if (runsInDom) {
+      parsed.compilerOptions[Symbol.for("before:lib")] = [
+        {
+          type: "LineComment",
+          inline: false,
+          value: " Include the DOM types",
+        },
+      ];
+    }
   }
 
   return (
@@ -182,7 +184,10 @@ export default function Editor(props: EditorProps) {
           language="tsx"
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre className="h-full" style={style}>
+            <pre
+              className="h-full bg-none"
+              style={{ ...style, backgroundColor: "transparent" }}
+            >
               <code className="block min-w-full p-5">
                 {tokens.map((line, i) => (
                   <div key={i} {...getLineProps({ line })}>
