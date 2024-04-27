@@ -89,13 +89,13 @@ export default function Editor(props: EditorProps) {
   if (runsInDom) {
     config.compilerOptions = {
       ...config.compilerOptions,
-      lib: ["esnext", "dom", "dom.iterable"],
-    };
+      lib: ["es2022", "dom", "dom.iterable"],
+    } as any as TSConfigJSON["compilerOptions"]; // TS Types lib does not recognize es2022 as a lib type
   } else {
     config.compilerOptions = {
       ...config.compilerOptions,
-      lib: ["esnext"],
-    };
+      lib: ["es2022"],
+    } as any as TSConfigJSON["compilerOptions"]; // TS Types lib does not recognize es2022 as a lib type
   }
 
   let parsed = parse(JSON.stringify(config));
