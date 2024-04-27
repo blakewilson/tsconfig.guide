@@ -16,7 +16,7 @@ export default function Home() {
               <Footer />
             </div>
           </div>
-          <div className="w-full lg:w-1/2 p-6 lg:overflow-hidden lg:p-0 lg:max-h-5/6 relative lg:-right-12">
+          <div className="w-full lg:w-1/2 p-6 lg:overflow-hidden lg:p-0 lg:max-h-5/6 relative lg:-right-2">
             <Editor />
           </div>
         </main>

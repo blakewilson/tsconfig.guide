@@ -70,14 +70,14 @@ export default function Editor(props: EditorProps) {
     } as any as TSConfigJSON["compilerOptions"]; // This TS types lib does not recognize preserve as a module type
   }
 
-  if (buildingLib) {
+  if (tsTranspiling && buildingLib) {
     config.compilerOptions = {
       ...config.compilerOptions,
       declaration: true,
     };
   }
 
-  if (buildingLibMonorepo) {
+  if (tsTranspiling && buildingLib && buildingLibMonorepo) {
     config.compilerOptions = {
       ...config.compilerOptions,
       composite: true,
@@ -103,8 +103,6 @@ export default function Editor(props: EditorProps) {
   if (!parsed) {
     return null;
   }
-
-  parsed;
 
   if (!removeComments) {
     (parsed as CommentArray<string>)[
@@ -195,7 +193,7 @@ export default function Editor(props: EditorProps) {
           <div className="my-2 flex-none text-slate-300 px-4 py-2 flex items-center">
             tsconfig.json
           </div>
-          <div className="h-8 flex items-center pr-16">
+          <div className="h-8 flex items-center pr-4 lg:pr-8">
             <div className="relative flex -mr-2 items-center">
               <Transition
                 show={showCopyText}
@@ -239,7 +237,7 @@ export default function Editor(props: EditorProps) {
             </div>
           </div>
         </div>
-        <div className="relative lg:max-h-[75vh] lg:overflow-y-auto">
+        <div className="relative lg:max-h-[75vh] overflow-y-auto">
           <Highlight
             theme={themes.nightOwl}
             code={prettyTSConfig}
