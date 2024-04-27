@@ -189,7 +189,7 @@ export default function Editor(props: EditorProps) {
     <>
       <div
         ref={editorRef}
-        className="relative overflow-hidden lg:h-full z-10 lg:-ml-10 col-span-3 bg-[#011627] rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10"
+        className="m-auto relative bg-[#011627] rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10"
       >
         <div className="relative flex justify-between items-center bg-[#0a2030] border-b border-b-[#1d3344] text-slate-400 text-md leading-6">
           <div className="my-2 flex-none text-slate-300 px-4 py-2 flex items-center">
@@ -239,15 +239,15 @@ export default function Editor(props: EditorProps) {
             </div>
           </div>
         </div>
-        <div className="relative h-full overflow-y-auto">
+        <div className="relative lg:max-h-[75vh] lg:overflow-y-auto">
           <Highlight
             theme={themes.nightOwl}
             code={prettyTSConfig}
             language="tsx"
           >
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
-              <pre className="h-full" style={style}>
-                <code className="block min-w-full p-5">
+              <pre className="" style={style}>
+                <code className="block p-5">
                   {tokens.map((line, i) => (
                     <div key={i} {...getLineProps({ line })}>
                       {line.map((token, key) => (

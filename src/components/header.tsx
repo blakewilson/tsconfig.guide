@@ -11,17 +11,17 @@ export default function Header() {
   const [isSharing, setIsSharing] = useState(false);
 
   return (
-    <header className={classNames("block lg:fixed z-40 bg-slate-900 w-full")}>
+    <header className={classNames("relative z-40 w-full")}>
       <nav
-        className="mx-auto flex max-w-full items-center justify-between p-6 lg:px-8"
+        className="flex w-full justify-between items-center p-6 lg:px-8"
         aria-label="Global"
       >
-        <div className="flex lg:flex-1">
+        <div className="">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="text-2xl font-semibold">TSConfig Guide</span>
           </a>
         </div>
-        <div className="lg:flex lg:flex-1 lg:justify-end">
+        <div className="">
           <button
             type="button"
             onClick={() => {
