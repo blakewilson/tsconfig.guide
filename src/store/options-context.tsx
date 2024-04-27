@@ -52,7 +52,7 @@ function countReducer(state: State, action: Actions) {
 function OptionsProvider({ children }: CountProviderProps) {
   const [state, dispatch] = React.useReducer(countReducer, {
     strictness: true,
-    tsTranspiling: true,
+    tsTranspiling: false,
     buildingLib: false,
     buildingLibMonorepo: false,
     runsInDom: true,

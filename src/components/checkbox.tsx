@@ -1,8 +1,9 @@
 import { Switch } from "@headlessui/react";
 import classNames from "classnames";
+import { ReactElement } from "react";
 
 type CheckboxInputProps = {
-  name: string;
+  name: string | (() => ReactElement);
   description: string;
   checked: boolean;
   setChecked: (isChecked: boolean) => void;

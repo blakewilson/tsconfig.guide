@@ -51,7 +51,15 @@ export default function Options() {
           }
         />
         <CheckboxInput
-          name="Are you Transpiling with TypeScript?"
+          name={() => (
+            <>
+              Are you using{" "}
+              <code className="inline bg-slate-800 px-1 py-0.5 font-bold text-white font-mono rounded">
+                tsc
+              </code>{" "}
+              to transpile your TypeScript?
+            </>
+          )}
           description="Toggle if you want to transpile your TypeScript to JavaScript, or not if you are not emitting files (i.e. using TypeScript for linting)"
           checked={tsTranspiling}
           setChecked={(value: boolean) =>
