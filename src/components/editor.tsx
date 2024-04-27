@@ -1,7 +1,14 @@
 "use client";
 import { useOptions } from "@/store/options-context";
 import { Transition } from "@headlessui/react";
-import { parse, stringify } from "comment-json";
+import {
+  CommentArray,
+  CommentObject,
+  CommentSymbol,
+  CommentToken,
+  parse,
+  stringify,
+} from "comment-json";
 import { Highlight, themes } from "prism-react-renderer";
 import { useRef, useState } from "react";
 import Confetti from "react-confetti";
@@ -97,65 +104,81 @@ export default function Editor(props: EditorProps) {
     return null;
   }
 
+  parsed;
+
   if (!removeComments) {
-    parsed[Symbol.for("before:include")] = [
+    (parsed as CommentArray<string>)[
+      Symbol.for("before:include") as CommentSymbol
+    ] = [
       {
         type: "LineComment",
         inline: false,
         value: " Include the necessary files for your project",
-      },
+      } as CommentToken,
     ];
 
-    parsed.compilerOptions[Symbol.for("before:esModuleInterop")] = [
+    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
+      Symbol.for("before:esModuleInterop") as CommentSymbol
+    ] = [
       {
         type: "LineComment",
         inline: false,
         value: " Base Options recommended for all projects",
-      },
+      } as CommentToken,
     ];
 
-    parsed.compilerOptions[Symbol.for("before:strict")] = [
+    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
+      Symbol.for("before:strict") as CommentSymbol
+    ] = [
       {
         type: "LineComment",
         inline: false,
         value: " Enable strict type checking so you can catch bugs early",
-      },
+      } as CommentToken,
     ];
 
-    parsed.compilerOptions[Symbol.for("before:module")] = [
+    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
+      Symbol.for("before:module") as CommentSymbol
+    ] = [
       {
         type: "LineComment",
         inline: false,
         value: tsTranspiling
           ? "Transpile our TypeScript code to JavaScript"
           : "We are not transpiling, so preserve our source code and do not emit files",
-      },
+      } as CommentToken,
     ];
 
-    parsed.compilerOptions[Symbol.for("before:declaration")] = [
+    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
+      Symbol.for("before:declaration") as CommentSymbol
+    ] = [
       {
         type: "LineComment",
         inline: false,
         value: "Emit type declarations",
-      },
+      } as CommentToken,
     ];
 
-    parsed.compilerOptions[Symbol.for("before:composite")] = [
+    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
+      Symbol.for("before:composite") as CommentSymbol
+    ] = [
       {
         type: "LineComment",
         inline: false,
         value:
           " Emit source maps and enable the composite option for monorepos",
-      },
+      } as CommentToken,
     ];
 
     if (runsInDom) {
-      parsed.compilerOptions[Symbol.for("before:lib")] = [
+      ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
+        Symbol.for("before:lib") as CommentSymbol
+      ] = [
         {
           type: "LineComment",
           inline: false,
           value: " Include the DOM types",
-        },
+        } as CommentToken,
       ];
     }
   }
