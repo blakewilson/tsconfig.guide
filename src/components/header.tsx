@@ -33,8 +33,10 @@ export default function Header() {
               }, 2500);
             }}
             className={classNames(
-              "flex items-center rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20",
-              isSharing ? "bg-green-500 hover:bg-green-500" : undefined
+              isSharing
+                ? "bg-green-100 text-green-700 hover:bg-green-100"
+                : "bg-white/10 hover:bg-white/20 text-white",
+              "flex items-center rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm"
             )}
           >
             <ShareIcon className="mr-2" width={16} height={16} />{" "}

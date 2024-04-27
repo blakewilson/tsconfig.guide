@@ -189,7 +189,7 @@ export default function Editor(props: EditorProps) {
     <>
       <div
         ref={editorRef}
-        className="m-auto relative bg-[#011627] rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10"
+        className="m-auto relative bg-[#011627] overflow-hidden rounded-xl shadow-lg xl:ml-0 dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10"
       >
         <div className="relative flex justify-between items-center bg-[#0a2030] border-b border-b-[#1d3344] text-slate-400 text-md leading-6">
           <div className="my-2 flex-none text-slate-300 px-4 py-2 flex items-center">
