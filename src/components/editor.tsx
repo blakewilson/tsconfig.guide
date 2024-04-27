@@ -1,5 +1,6 @@
 "use client";
 import { useOptions } from "@/store/options-context";
+import { Transition } from "@headlessui/react";
 import { parse, stringify } from "comment-json";
 import { Highlight, themes } from "prism-react-renderer";
 import { useRef, useState } from "react";
@@ -12,6 +13,7 @@ export default function Editor(props: EditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
 
   const [isExploding, setIsExploding] = useState(false);
+  const [showCopyText, setShowCopyText] = useState(false);
   const {
     state: {
       strictness,
@@ -171,24 +173,39 @@ export default function Editor(props: EditorProps) {
             tsconfig.json
           </div>
           <div className="h-8 flex items-center pr-16">
-            <div className="relative flex -mr-2">
+            <div className="relative flex -mr-2 items-center">
+              <Transition
+                show={showCopyText}
+                enter="transition-opacity duration-75"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <span className="mr-2 text-green-500">Copied!</span>
+              </Transition>
               <button
                 type="button"
                 onClick={() => {
                   setIsExploding(true);
+                  setShowCopyText(true);
                   navigator.clipboard.writeText(prettyTSConfig);
                   setTimeout(() => {
+                    setShowCopyText(false);
+                  }, 2000);
+                  setTimeout(() => {
                     setIsExploding(false);
-                  }, 6000);
+                  }, 10000);
                 }}
                 className="text-slate-500 hover:text-slate-400"
               >
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   aria-hidden="true"
                   className="w-8 h-8"
                 >
