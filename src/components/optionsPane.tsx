@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
-import CheckboxInput from "./checkbox";
 import { useOptions } from "@/store/options-context";
+import CheckboxInput from "./checkbox";
 
 export default function Options() {
   const {
