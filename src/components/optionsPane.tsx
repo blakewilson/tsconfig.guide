@@ -20,8 +20,7 @@ export default function Options() {
     <>
       <div className="mb-12">
         <h2 className="text-4xl font-semibold mb-4 leading-normal text-white">
-          Sick of Scouring the TypeScript Docs for What You Need in Your
-          TSConfig?
+          Sick of scouring the TypeScript docs to setup your TSConfig?
         </h2>
         <p className="mb-4 text-2xl text-slate-500">
           I was too, so I built this tool to get you started with some smart
