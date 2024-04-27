@@ -28,7 +28,7 @@ export default function Options() {
         <p className="text-2xl text-slate-500">
           This TSConfig builder is heavily influenced by{" "}
           <a
-            className="text-white underline"
+            className="text-white "
             target="_blank"
             href="https://www.totaltypescript.com/tsconfig-cheat-sheet"
           >
