@@ -3,6 +3,7 @@ import { useOptions } from "@/store/options-context";
 import { Transition } from "@headlessui/react";
 import {
   CommentArray,
+  CommentJSONValue,
   CommentObject,
   CommentSymbol,
   CommentToken,
@@ -15,6 +16,22 @@ import Confetti from "react-confetti";
 import { TSConfigJSON } from "types-tsconfig";
 
 type EditorProps = {};
+
+function writeCommentBeforeLine(
+  parsedConfig: CommentJSONValue,
+  symbolKey: string,
+  comment: string
+) {
+  (parsedConfig as CommentArray<string>)[
+    Symbol.for(symbolKey) as CommentSymbol
+  ] = [
+    {
+      type: "LineComment",
+      inline: false,
+      value: ` ${comment}`,
+    } as CommentToken,
+  ];
+}
 
 export default function Editor(props: EditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -98,86 +115,69 @@ export default function Editor(props: EditorProps) {
     } as any as TSConfigJSON["compilerOptions"]; // TS Types lib does not recognize es2022 as a lib type
   }
 
-  let parsed = parse(JSON.stringify(config));
+  let parsed = parse(JSON.stringify(config)) as CommentObject;
 
   if (!parsed) {
     return null;
   }
 
   if (!removeComments) {
-    (parsed as CommentArray<string>)[
-      Symbol.for("before:include") as CommentSymbol
-    ] = [
-      {
-        type: "LineComment",
-        inline: false,
-        value: " Include the necessary files for your project",
-      } as CommentToken,
-    ];
+    writeCommentBeforeLine(
+      parsed,
+      "before:include",
+      "Include the necessary files for your project"
+    );
 
-    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
-      Symbol.for("before:esModuleInterop") as CommentSymbol
-    ] = [
-      {
-        type: "LineComment",
-        inline: false,
-        value: " Base Options recommended for all projects",
-      } as CommentToken,
-    ];
+    writeCommentBeforeLine(
+      parsed.compilerOptions,
+      "before:esModuleInterop",
+      "Base Options recommended for all projects"
+    );
 
-    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
-      Symbol.for("before:strict") as CommentSymbol
-    ] = [
-      {
-        type: "LineComment",
-        inline: false,
-        value: " Enable strict type checking so you can catch bugs early",
-      } as CommentToken,
-    ];
+    if (strictness) {
+      writeCommentBeforeLine(
+        parsed.compilerOptions,
+        "before:strict",
+        "Enable strict type checking so you can catch bugs early"
+      );
+    }
 
-    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
-      Symbol.for("before:module") as CommentSymbol
-    ] = [
-      {
-        type: "LineComment",
-        inline: false,
-        value: tsTranspiling
-          ? "Transpile our TypeScript code to JavaScript"
-          : "We are not transpiling, so preserve our source code and do not emit files",
-      } as CommentToken,
-    ];
+    if (tsTranspiling) {
+      writeCommentBeforeLine(
+        parsed.compilerOptions,
+        "before:module",
+        "Transpile our TypeScript code to JavaScript"
+      );
 
-    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
-      Symbol.for("before:declaration") as CommentSymbol
-    ] = [
-      {
-        type: "LineComment",
-        inline: false,
-        value: "Emit type declarations",
-      } as CommentToken,
-    ];
+      if (buildingLib) {
+        writeCommentBeforeLine(
+          parsed.compilerOptions,
+          "before:declaration",
+          "Emit type declarations"
+        );
 
-    ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
-      Symbol.for("before:composite") as CommentSymbol
-    ] = [
-      {
-        type: "LineComment",
-        inline: false,
-        value:
-          " Emit source maps and enable the composite option for monorepos",
-      } as CommentToken,
-    ];
+        if (buildingLibMonorepo) {
+          writeCommentBeforeLine(
+            parsed.compilerOptions,
+            "before:composite",
+            "Emit source maps and enable the composite option for monorepos"
+          );
+        }
+      }
+    } else {
+      writeCommentBeforeLine(
+        parsed.compilerOptions,
+        "before:module",
+        "We are not transpiling, so preserve our source code and do not emit files"
+      );
+    }
 
     if (runsInDom) {
-      ((parsed as CommentObject).compilerOptions as CommentArray<string>)[
-        Symbol.for("before:lib") as CommentSymbol
-      ] = [
-        {
-          type: "LineComment",
-          inline: false,
-          value: " Include the DOM types",
-        } as CommentToken,
-      ];
+      writeCommentBeforeLine(
+        parsed.compilerOptions,
+        "before:lib",
+        "Include the DOM types"
+      );
     }
   }
 
