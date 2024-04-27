@@ -67,7 +67,7 @@ export default function Editor(props: EditorProps) {
       ...config.compilerOptions,
       module: "preserve",
       noEmit: true,
-    };
+    } as any as TSConfigJSON["compilerOptions"]; // This TS types lib does not recognize preserve as a module type
   }
 
   if (buildingLib) {
