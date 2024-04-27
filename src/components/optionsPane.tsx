@@ -60,7 +60,7 @@ export default function Options() {
               to transpile your TypeScript?
             </>
           )}
-          description="Toggle if you want to transpile your TypeScript to JavaScript, or not if you are not emitting files (i.e. using TypeScript for linting)"
+          description="Toggle if you using tsc to transpile your TypeScript, or not if you are not emitting files (i.e. using TypeScript for linting)"
           checked={tsTranspiling}
           setChecked={(value: boolean) =>
             dispatch({
