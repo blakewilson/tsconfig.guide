@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     "TSConfig Guide - Generate a modern TSConfig file from just a few toggles.",
   description:
     "TSConfig Guide enables you to generate a modern TSConfig file for your TypeScript project from just a few toggles",
+  openGraph: {
+    images: "/opengraph-image.jpg",
+  },
 };
 
 export default function RootLayout({
