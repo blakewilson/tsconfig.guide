@@ -6,6 +6,7 @@ import classNames from "classnames";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tsconfig.guide"),
   title:
     "TSConfig Guide - Generate a modern TSConfig file from just a few toggles.",
   description:
