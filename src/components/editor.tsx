@@ -197,6 +197,10 @@ export default function Editor() {
       return;
     }
 
+    for(let i = 0; i < lineRefs.current.length; i++) {
+      lineRefs.current[i].classList.remove('animate-fade')
+    }
+
     let newLines: HTMLDivElement[] = []
 
     let newMap = new Map<string, HTMLDivElement>()
