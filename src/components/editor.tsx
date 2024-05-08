@@ -11,7 +11,7 @@ import {
   stringify,
 } from "comment-json";
 import { Highlight, themes } from "prism-react-renderer";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
 import { TsConfigJson } from "type-fest";
 
@@ -33,7 +33,8 @@ function writeCommentBeforeLine(
 
 export default function Editor() {
   const editorRef = useRef<HTMLDivElement>(null);
-
+  const lineRefs = useRef<HTMLDivElement[]>([])
+  const [lines, setLines] = useState<Map<string, HTMLDivElement>>(new Map<string, HTMLDivElement>())
   const [isExploding, setIsExploding] = useState(false);
   const [showCopyText, setShowCopyText] = useState(false);
   const {
@@ -181,6 +182,59 @@ export default function Editor() {
 
   const prettyTSConfig = stringify(parsed, null, 2);
 
+  useEffect(() => {
+      let map = new Map<string, HTMLDivElement>()
+
+      for(let i = 0; i < lineRefs.current.length; i++) {
+        map.set(lineRefs.current[i].innerText, lineRefs.current[i])
+      }
+
+      setLines(map)
+  }, [])
+
+  useEffect(() => {
+    if(lines.size === 0) {
+      return;
+    }
+
+    for(let i = 0; i < lineRefs.current.length; i++) {
+      lineRefs.current[i].classList.remove('animate-fade')
+    }
+
+    let newLines: HTMLDivElement[] = []
+
+    let newMap = new Map<string, HTMLDivElement>()
+    for(let i = 0; i < lineRefs.current.length; i++) {
+      newMap.set(lineRefs.current[i].innerText, lineRefs.current[i])
+    }
+
+    newMap.forEach((value, key) => {
+      if(!lines.has(key)) {
+        newLines.push(value)
+      }
+    })
+
+
+    for(let i = 0; i < newLines.length; i++) {
+      newLines[i].classList.add('animate-fade')
+    }
+
+    setTimeout(() => {
+      for(let i = 0; i < newLines.length; i++) {
+        newLines[i].classList.remove('animate-fade')
+      }
+    }, 2500)
+
+    setLines(newMap)
+  }, [
+      strictness,
+      tsTranspiling,
+      buildingLib,
+      buildingLibMonorepo,
+      runsInDom,
+      removeComments,
+  ])
+
   return (
     <>
       <div
@@ -241,19 +295,34 @@ export default function Editor() {
             code={prettyTSConfig}
             language="tsx"
           >
-            {({ className, style, tokens, getLineProps, getTokenProps }) => (
-              <pre className="" style={style}>
-                <code className="block p-5">
-                  {tokens.map((line, i) => (
-                    <div key={i} {...getLineProps({ line })}>
-                      {line.map((token, key) => (
-                        <span key={key} {...getTokenProps({ token })} />
-                      ))}
-                    </div>
-                  ))}
-                </code>
-              </pre>
-            )}
+            {({ className, style, tokens, getLineProps, getTokenProps }) => {
+              lineRefs.current = []
+              return (
+                <pre className="" style={style}>
+                  <code className="block p-5">
+                    {tokens.map((line, i) => {
+                      return (
+                        <div
+                          key={i}
+                          {...getLineProps({ line })}
+                          ref={(el) => {
+                            if(!el) {
+                              return;
+                            }
+
+                            lineRefs.current.push(el)
+                          }}
+                        >
+                          {line.map((token, key) => (
+                            <span key={key} {...getTokenProps({ token })} />
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </code>
+                </pre>
+              );
+            }}
           </Highlight>
         </div>
       </div>
