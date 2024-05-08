@@ -18,12 +18,12 @@ const config: Config = {
         fade: 'fadeOut 2.5s ease-in-out'
       },
 
-      keyframes: theme => ({
+      keyframes: {
         fadeOut: {
           '0%': { backgroundColor: '#30404d' },
-          '100%': { backgroundColor: theme('colors.transparent') },
+          '100%': { backgroundColor: 'transparent' },
         }
-      })
+      }
     },
   },
   plugins: [],
